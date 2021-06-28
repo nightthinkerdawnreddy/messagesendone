@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form  method="POST" id="task-form" >
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <br>
+        <label for="email">email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <br>
+        <label for="year">select year :</label>
+        <input type="number" id="year" name="year" min="2021" max="2030" required>
+        <br>
+        <br>
+        <label for="month">select month :</label>
+        <input type="number" id="month" name="month" min="1" max="12" required>
+        <br>
+        <br>
+        <label for="day">select day :</label>
+        <input type="number" id="day" name="day" min="1" max="31" required>
+        <br>
+        <br>
+        <label for="hour">select hour :</label>
+        <input type="number" id="hour" name="hour" min="0" max="23" required>
+        <br>
+        <br>
+        <label for="minute">select minute :</label>
+        <input type="number" id="minute" name="minute" min="0" max="59" required>
+        <br>
+        <br>
+        <label for="task">enter task :</label>
+        <input type="text" id="task" name="task" min="0" max="59" required>
+        <br>
+        <br>
+        <button type="submit" >save</button>        
+    </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" 
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+            crossorigin="anonymous"></script>
+  
+    <script type="text/javascript">
+    $(document).on('submit','#task-form',function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:'{% url "home" %}',
+            data:
+            {
+                name:$("#name").val(),
+                email:$("#email").val(),
+                year:$("#year").val(),
+                month:$("#month").val(),
+                day:$("#day").val(),
+                hour:$("#hour").val(),
+                minute:$("#minute").val(),
+                task:$("#task").val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(){
+                  alert('Saved');
+                    }
+            })
+            document.getElementById('task').value='';
+        });
+    </script>
+</body>
+</html>
